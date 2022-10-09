@@ -37,7 +37,7 @@ app.get('/todos/new', (req, res) => {
     return res.render('new');
 });
 
-// 處理新增todo的路由
+// 新增todo資料的 處理路由
 app.post('/todos', (req, res) => {
     const name = req.body.name; // 從 req.body 拿出表單裡的 name 資料
     return Todo.create({ name }) // 存入資料庫
@@ -45,7 +45,7 @@ app.post('/todos', (req, res) => {
         .catch((error) => console.log(error));
 });
 
-// detail
+// detail  因為在index.js裡面將detail路由定義為"./todos/{{this._id}}"
 app.get('/todos/:id', (req, res) => {
     const id = req.params.id;
     return Todo.findById(id)
@@ -66,10 +66,11 @@ app.get('/todos/:id/edit', (req, res) => {
 // update
 app.post('/todos/:id/edit', (req, res) => {
     const id = req.params.id;
-    const name = req.body.name;
+    const {name, isDone} = req.body;
     return Todo.findById(id)
         .then((todo) => {
             todo.name = name;
+            todo.isDone = isDone === 'on'
             return todo.save();
         })
         .then(() => res.redirect(`/todos/${id}`))
