@@ -1,7 +1,7 @@
-const express = require('express')
-const router = express.Router()
+const express = require('express');
+const router = express.Router();
 
-const Todo = require('../../models/todo')
+const Todo = require('../../models/todo');
 
 // 設定首頁路由
 router.get('/', (req, res) => {
@@ -13,4 +13,4 @@ router.get('/', (req, res) => {
         .catch((error) => console.error(error)); // 錯誤處理
 });
 
-module.exports = router
+module.exports = router;
